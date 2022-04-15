@@ -1,0 +1,39 @@
+{
+  "name": "patrula-canina",
+  "version": "1.0.0",
+  "description": "",
+  "author": {
+    "name": "Daniel Santos"
+  },
+  "contributors": [],
+  "homepage": "https://github.com/w-b-dev/patrula-canina",
+  "bugs": "https://github.com/w-b-dev/patrula-canina/issues",
+  "repository": "https://github.com/w-b-dev/patrula-canina",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10"
+  },
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "scripts": {
+    "lint": "eslint . --cache --fix",
+    "pretest": "npm run lint",
+    "format": "prettier --loglevel warn --write \"**/*.{js,css,md}\"",
+    "posttest": "npm run format",
+    "prepare": "husky install"
+  },
+  "keywords": [],
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.8",
+    "prettier": "^2.6.2"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
+}
