@@ -43,7 +43,13 @@ function App() {
 			</section>
 		);
 	});
-
+	const options = [0, 1, 2, 4, 5, 6, 7];
+	const randomOption = () => {
+		const randomPointerInRange = Math.trunc(Math.random() * options.length);
+		const valueLeftFound = options[randomPointerInRange !== options.length ? randomPointerInRange : options.length - 1];
+		options.splice(randomPointerInRange, 1)
+		return valueLeftFound
+	}
 	return (
 		<div className="App">
 			<section className={"cima"}>
@@ -52,8 +58,8 @@ function App() {
 
 			<section className={"baixo"}>
 				<div className="container-imagens">
-					{caoHTML[Math.trunc(Math.random() * membros.data.length) === 3 ? 2 : Math.trunc(Math.random() * membros.data.length)]}
-					{caoHTML[Math.trunc(Math.random() * membros.data.length) === 3 ? 4 : Math.trunc(Math.random() * membros.data.length)]}
+					{caoHTML[randomOption()]}
+					{caoHTML[randomOption()]}
 				</div>
 			</section>
 		</div>
