@@ -52,8 +52,8 @@ function App() {
 
 			<section className={"baixo"}>
 				<div className="container-imagens">
-					{caoHTML[0]}
-					{caoHTML[6]}
+					{caoHTML[Math.trunc(Math.random() * membros.data.length) === 3 ? 2 : Math.trunc(Math.random() * membros.data.length)]}
+					{caoHTML[Math.trunc(Math.random() * membros.data.length) === 3 ? 4 : Math.trunc(Math.random() * membros.data.length)]}
 				</div>
 			</section>
 		</div>
