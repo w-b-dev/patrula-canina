@@ -1,25 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
+const myHeaders = new Headers();
+myHeaders.append("x-api-key", "xRBIhhHdC78UNHr51LNCJ7BnpmtWr9LJ9kpc3MjZ");
+// don't forget to add on the server: "Access-Control-Allow-Origin = *"
+
+const requestOptions = {
+	method: "GET",
+	headers: myHeaders,
+};
+
 function App() {
+	const [membros, setMembros] = useState({
+		count: 0,
+		data: [
+			{
+				imagem: "",
+				nome: "",
+				raca: "",
+			},
+		],
+	});
+	useEffect(() => {
+		const fetchPatrulhaCanina = async () => {
+			const response = await fetch(
+				"https://yzpm2ts842.execute-api.ca-central-1.amazonaws.com/PROD/dogs",
+				requestOptions
+			);
+			const data = await response.json();
+			// console.log(data);
+			setMembros(data);
+			return data;
+		};
+		fetchPatrulhaCanina().then(_ => null);
+	}, []);
+
+	const caoHTML = membros.data.map((membro) => {
+		return (
+			<section className={"membro"} key={membro.nome}>
+				<img src={membro.imagem} alt={membro.nome} />
+				<pre style={{ color: "black", textAlign: "center" }}>{membro.raca}</pre>
+			</section>
+		);
+	});
+
 	return (
 		<div className="App">
 			<section className={"cima"}>
-				<img
-					src="https://images.unsplash.com/photo-1595250507659-56656e8a30a1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80"
-					alt="cao deitado na praia"
-				/>
+				{caoHTML[3]}
 			</section>
+
 			<section className={"baixo"}>
 				<div className="container-imagens">
-					<img
-						src="https://www.educacaoetransformacao.com.br/wp-content/uploads/2019/11/marshall-patrulha-canina-png-imagem-5.png"
-						alt="marshall"
-					/>
-					<img
-						src="https://3.bp.blogspot.com/-U0iIoon8vxo/XJU-mwglYxI/AAAAAAAAAjk/U4D9GSV5zy8T6bpbW0ZW6GsYnyLUf8SvQCLcBGAs/s1600/patrulha-canina-chase-03.png"
-						alt="Chase"
-					/>
+					{caoHTML[4]}
+					{caoHTML[5]}
 				</div>
 			</section>
 		</div>
