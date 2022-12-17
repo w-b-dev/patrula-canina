@@ -52,8 +52,8 @@ function App() {
 
 			<section className={"baixo"}>
 				<div className="container-imagens">
-					{caoHTML[4]}
-					{caoHTML[5]}
+					{caoHTML[0]}
+					{caoHTML[6]}
 				</div>
 			</section>
 		</div>
