@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 
 const myHeaders = new Headers();
@@ -38,8 +38,8 @@ function App() {
 	const caoHTML = membros.data.map((membro) => {
 		return (
 			<section className={"membro"} key={membro.nome}>
-				<img src={membro.imagem} alt={membro.nome} />
-				<pre style={{ color: "black", textAlign: "center" }}>{membro.raca}</pre>
+				<img src={membro.imagem} alt={membro.nome}/>
+				<pre style={{color: "black", textAlign: "center"}}>{membro.raca}</pre>
 			</section>
 		);
 	});
@@ -54,13 +54,15 @@ function App() {
 		<div className="App">
 			<section className={"cima"}>
 				{caoHTML[3]}
+				<section>
+					<h2>✅: 0</h2>
+					<h2>❌: 0</h2>
+				</section>
 			</section>
 
 			<section className={"baixo"}>
-				<div className="container-imagens">
-					{caoHTML[randomOption()]}
-					{caoHTML[randomOption()]}
-				</div>
+				{caoHTML[randomOption()]}
+				{caoHTML[randomOption()]}
 			</section>
 		</div>
 	);
