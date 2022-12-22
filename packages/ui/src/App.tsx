@@ -24,7 +24,7 @@ function App() {
 	useEffect(() => {
 		const fetchPatrulhaCanina = async () => {
 			const response = await fetch(
-				"https://yzpm2ts842.execute-api.ca-central-1.amazonaws.com/PROD/dogs",
+				process.env?.REACT_APP_AWS_API_URL + "/dogs" ?? "foo",
 				requestOptions
 			);
 			const data = await response.json();
