@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./App.css";
 
 const myHeaders = new Headers();
-myHeaders.append("x-api-key", "xRBIhhHdC78UNHr51LNCJ7BnpmtWr9LJ9kpc3MjZ");
+myHeaders.append("x-api-key", process.env?.REACT_APP_AWS_API_KEY ?? "foo");
 // don't forget to add on the server: "Access-Control-Allow-Origin = *"
 
 const requestOptions = {
