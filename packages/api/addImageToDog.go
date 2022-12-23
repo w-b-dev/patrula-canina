@@ -4,23 +4,42 @@ package main
 // https://github.com/aws/aws-lambda-go/
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
-type MyEvent struct {
-	Nome string `json:"nome"`
-	Raca string `json:"raca"`
-}
+//type ResponseBody struct {
+//	Foo string `json:"foo"`
+//	Bar string `json:"bar"`
+//}
 
-type MyResponse struct {
-	//Message string `json:"Response"`
-	Message string
-}
+func HandleRequest(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	fmt.Printf("Processing request data for request %s.\n", request.RequestContext.RequestID)
+	fmt.Printf("Body size = %d.\n", len(request.Body))
+	fmt.Println("Headers:")
+	for key, value := range request.Headers {
+		fmt.Printf("    %s: %s\n", key, value)
+	}
+	stringifiedRequest, _ := json.Marshal(request)
+	//	prepare response
+	//body := ResponseBody{
+	//	Foo: string(stringifiedRequest),
+	//Bar: string(stringifiedRequest),
+	//}
 
-func HandleRequest(ctx context.Context, ev MyEvent) (string, error) {
-	res := "dog's name " + ev.Nome + " dog's breed: " + ev.Raca
-	return (res), nil
-	//return fmt.Sprintf("Hello %s!", name.Name), nil
+	//bodyStringified, _ := json.Marshal(body)
+
+	response := events.APIGatewayProxyResponse{
+		StatusCode:        201,
+		Headers:           nil,
+		MultiValueHeaders: nil,
+		Body:              string(stringifiedRequest),
+		IsBase64Encoded:   false,
+	}
+
+	return response, nil
 }
 
 func main() {

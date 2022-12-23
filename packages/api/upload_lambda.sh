@@ -37,6 +37,9 @@ updateGoCode() {
 	echo "create the executable file"
 	GOOS=linux GOARCH=amd64 go build -o main main.go
 	echo "delete source (renamed)"
+	if [ ! -e main ]; then
+		exit 1
+	fi
 	rm main.go
 	echo "zip the executable"
 	zip main.zip main
