@@ -2,6 +2,7 @@
 
 updatePythonCode() {
 	echo "Updating Python code"
+	cd ../src/GET/PYTHON
 	echo "rename file to what AWS expects"
 	cp getCachorros.py lambda_function.py
 	echo "zip the executable"
@@ -17,6 +18,7 @@ updatePythonCode() {
 
 updateJavaScriptCode() {
 	echo "Updating JavaScript code"
+	cd ../src/POST/JS
 	echo "rename file to what AWS expects"
 	cp postCachorros.mjs index.mjs
 	echo "zip the executable"
@@ -32,6 +34,7 @@ updateJavaScriptCode() {
 
 updateGoCode() {
 	echo "Updating Go code"
+	cd ../src/PATCH/GO
 	echo "rename file to what AWS expects"
 	cp addImageToDog.go main.go
 	echo "create the executable file"
