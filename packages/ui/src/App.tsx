@@ -10,6 +10,13 @@ const requestOptions = {
 	headers: myHeaders,
 };
 
+interface Membro {
+	relatedimages: string[],
+	baseimages: string[],
+	name: string,
+	cat: string,
+}
+
 function App() {
 	const [membros, setMembros] = useState({
 		count: 0,
@@ -36,15 +43,20 @@ function App() {
 		fetchPatrulhaCanina().then(_ => null);
 	}, []);
 
-	const caoHTML = membros.data.map((membro) => {
+	const CaoHTML = ({membro, isBaseImage}: {membro: Membro, isBaseImage: boolean}) => {
 		return (
 			<section className={"membro"} key={membro.name}>
-				<img src={process.env?.REACT_APP_CDN_URL + "/" + membro.baseimages[0]} alt={membro.name}/>
+				<img
+					src={process.env?.REACT_APP_CDN_URL + "/" + isBaseImage ? membro.baseimages[0] : membro.relatedimages[0]}
+					alt={membro.name}/>
 				<pre style={{color: "black", textAlign: "center"}}>{membro.name}</pre>
 			</section>
-		);
+		)
+	};
+
+	const options = membros.data.map((e, i) => {
+		return i
 	});
-	const options = [0, 1, 2, 4, 5, 6, 7];
 	const randomOption = () => {
 		const randomPointerInRange = Math.trunc(Math.random() * options.length);
 		const valueLeftFound = options[randomPointerInRange !== options.length ? randomPointerInRange : options.length - 1];
@@ -54,7 +66,7 @@ function App() {
 	return (
 		<div className="App">
 			<section className={"cima"}>
-				{caoHTML[3]}
+				<CaoHTML isBaseImage={true} membro={membros.data[randomOption()]}/>
 				<section>
 					<h2>✅: 0</h2>
 					<h2>❌: 0</h2>
@@ -62,8 +74,8 @@ function App() {
 			</section>
 
 			<section className={"baixo"}>
-				{caoHTML[randomOption()]}
-				{caoHTML[randomOption()]}
+				<CaoHTML isBaseImage={false} membro={membros.data[randomOption()]}/>
+				<CaoHTML isBaseImage={false} membro={membros.data[randomOption()]}/>
 			</section>
 		</div>
 	);
