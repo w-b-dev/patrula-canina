@@ -15,16 +15,17 @@ function App() {
 		count: 0,
 		data: [
 			{
-				imagem: "",
-				nome: "",
-				raca: "",
+				relatedimages: [],
+				baseimages: [],
+				name: "",
+				cat: "",
 			},
 		],
 	});
 	useEffect(() => {
 		const fetchPatrulhaCanina = async () => {
 			const response = await fetch(
-				process.env?.REACT_APP_AWS_API_URL + "/dogs" ?? "foo",
+				process.env?.REACT_APP_AWS_API_URL + "/v3" ?? "foo",
 				requestOptions
 			);
 			const data = await response.json();
@@ -37,9 +38,9 @@ function App() {
 
 	const caoHTML = membros.data.map((membro) => {
 		return (
-			<section className={"membro"} key={membro.nome}>
-				<img src={membro.imagem} alt={membro.nome}/>
-				<pre style={{color: "black", textAlign: "center"}}>{membro.raca}</pre>
+			<section className={"membro"} key={membro.name}>
+				<img src={membro.baseimages[0]} alt={membro.name}/>
+				<pre style={{color: "black", textAlign: "center"}}>{membro.name}</pre>
 			</section>
 		);
 	});
