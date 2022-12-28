@@ -2,7 +2,7 @@
 
 updatePythonCode() {
 	echo "Updating Python code"
-	cd ../src/GET/PYTHON
+	cd ../src/GET/PYTHON || exit
 	echo "rename file to what AWS expects"
 	cp getCachorros.py lambda_function.py
 	echo "zip the executable"
@@ -18,7 +18,7 @@ updatePythonCode() {
 
 updateJavaScriptCode() {
 	echo "Updating JavaScript code"
-	cd ../src/POST/JS
+	cd ../src/POST/JS || exit
 	echo "rename file to what AWS expects"
 	cp postCachorros.mjs index.mjs
 	echo "zip the executable"
@@ -34,23 +34,20 @@ updateJavaScriptCode() {
 
 updateGoCode() {
 	echo "Updating Go code"
-	cd ../src/PATCH/GO
-	echo "rename file to what AWS expects"
+	cd ../src/PATCH/GO || exit
+	#	echo "rename file"
 	cp addImageToDog.go main.go
 	echo "create the executable file"
-	GOOS=linux GOARCH=amd64 go build -o main main.go
-	echo "delete source (renamed)"
-	if [ ! -e main ]; then
-		exit 1
-	fi
-	rm main.go
+	GOOS=linux GOARCH=amd64 go build main.go
 	echo "zip the executable"
 	zip main.zip main
-	echo "remove the executable"
-	rm main
 	echo "upload to AWS started"
 	aws lambda update-function-code --function-name addImageToDog --zip-file fileb://main.zip | jq -S '.LastUpdateStatus'
-	echo "removes uploaded file"
+	echo "clean up: remove the executable"
+	rm main
+	echo "clean up: remove the renamed source"
+	rm main.go
+	echo "clean up: removes uploaded zip"
 	rm main.zip
 	echo "upload to AWS finished"
 }
