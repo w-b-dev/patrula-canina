@@ -39,7 +39,7 @@ function App() {
 	const caoHTML = membros.data.map((membro) => {
 		return (
 			<section className={"membro"} key={membro.name}>
-				<img src={membro.baseimages[0]} alt={membro.name}/>
+				<img src={process.env?.REACT_APP_CDN_URL ?? "" + "/" + membro.baseimages[0]} alt={membro.name}/>
 				<pre style={{color: "black", textAlign: "center"}}>{membro.name}</pre>
 			</section>
 		);
