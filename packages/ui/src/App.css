@@ -1,3 +1,9 @@
+pre {
+	font-family: monospace;
+	font-size: 1.5em;
+	text-transform: uppercase;
+}
+
 .App {
 	display: flex;
 	flex-direction: column;
@@ -29,7 +35,7 @@
 
 .membro img {
 	max-height: 300px;
-	max-width: 50vw;
+	max-width: 30vw;
 	margin: 0.5rem;
 }
 
