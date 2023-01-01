@@ -17,7 +17,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_AWS_API_URL=https://patrulha.codein.ca REACT_APP_AWS_API_KEY=ypkHQufASW1IiTQIz9Avha5402VXP8IS9HQgQUaf REACT_APP_CDN_URL=https://d3k34g5329pbin.cloudfront.net react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,27 +1,9 @@
 import React, {useEffect, useState} from "react";
 import "./App.css";
+import {ApiResponseType} from "./interfaces";
+import {SingleEntryElement} from "./SingleEntryElement";
+import {getAllEntries} from "./api";
 
-const myHeaders = new Headers();
-myHeaders.append("x-api-key", process.env?.REACT_APP_AWS_API_KEY ?? "foo");
-// don't forget to add on the server: "Access-Control-Allow-Origin = *"
-
-interface ApiResponseType {
-	relatedimages: string[],
-	baseimages: string[],
-	name: string,
-	cat: string,
-}
-
-const SingleEntryElement = ({membro, isBaseImage, onClick}: { membro: ApiResponseType, isBaseImage: boolean, onClick?: () => void }) => {
-	return (
-		<section className={"membro"} onClick={onClick}>
-			<img
-				src={isBaseImage ? process.env?.REACT_APP_CDN_URL + "/" + membro.baseimages[0] : process.env?.REACT_APP_CDN_URL + "/" + membro.relatedimages[0]}
-				alt={membro.name}/>
-			<pre style={{color: "black", textAlign: "center"}}>{membro.name}</pre>
-		</section>
-	)
-};
 
 const handleAnswer = (isCorrect: boolean) => {
 	alert(isCorrect ? "✅" : "❌");
@@ -38,21 +20,10 @@ const handleUserRegistration = (email: string, setUserRetrieved: (v: boolean) =>
 function App() {
 	const [userEmail, setUserEmail] = useState<string>("");
 	const [userRetrieved, setUserRetrieved] = useState<boolean>(false);
-	const [apiResponse, setApiResponse] = useState<ApiResponseType[]>([]);
+	const [getAPI, setGetAPI] = useState<ApiResponseType[]>([]);
 	useEffect(() => {
-		const fetchPatrulhaCanina = async () => {
-			const response = await fetch(
-				process.env?.REACT_APP_AWS_API_URL + "/v3" ?? "foo",
-				{
-					method: "GET",
-					headers: myHeaders,
-				}
-			);
-			const data = await response.json();
-			setApiResponse(data.data);
-			return data;
-		};
-		fetchPatrulhaCanina().then(_ => null);
+		getAllEntries().then(data => setGetAPI(data.data)
+		);
 	}, []);
 
 	return (
@@ -66,7 +37,7 @@ function App() {
 								   id={'email'}
 								   value={userEmail}
 								   onChange={v => setUserEmail(v.currentTarget.value)}
-								   onKeyDown={(ev) => ev.key==='Enter' ? handleUserRegistration(userEmail, setUserRetrieved): null}
+								   onKeyDown={(ev) => ev.key === 'Enter' ? handleUserRegistration(userEmail, setUserRetrieved) : null}
 							/>
 							<button
 								onClick={() => handleUserRegistration(userEmail, setUserRetrieved)}
@@ -76,7 +47,7 @@ function App() {
 					</>)}
 			</header>
 			<section className={"cima"}>
-				{apiResponse.length > 0 && <SingleEntryElement isBaseImage={true} membro={apiResponse[0]}/>}
+				{getAPI.length > 0 && <SingleEntryElement isBaseImage={true} membro={getAPI[0]}/>}
 				<section>
 					{userRetrieved && <div style={{flex: 1}} id={'email'}>{userEmail}</div>}
 					<h2>✅: {userRetrieved ? 0 : "n/a"}</h2>
@@ -86,12 +57,15 @@ function App() {
 
 			{userRetrieved &&
 				<section className={"baixo"}>
-					{apiResponse.length > 0 &&
-						<SingleEntryElement isBaseImage={false} membro={apiResponse[0]} onClick={() => handleAnswer(true)}/>}
-					{apiResponse.length > 0 &&
-						<SingleEntryElement isBaseImage={false} membro={apiResponse[1]} onClick={() => handleAnswer(false)}/>}
-					{apiResponse.length > 0 &&
-						<SingleEntryElement isBaseImage={false} membro={apiResponse[2]} onClick={() => handleAnswer(false)}/>}
+					{getAPI.length > 0 &&
+						<SingleEntryElement isBaseImage={false} membro={getAPI[0]}
+											onClick={() => handleAnswer(true)}/>}
+					{getAPI.length > 0 &&
+						<SingleEntryElement isBaseImage={false} membro={getAPI[1]}
+											onClick={() => handleAnswer(false)}/>}
+					{getAPI.length > 0 &&
+						<SingleEntryElement isBaseImage={false} membro={getAPI[2]}
+											onClick={() => handleAnswer(false)}/>}
 				</section>
 			}
 		</div>
