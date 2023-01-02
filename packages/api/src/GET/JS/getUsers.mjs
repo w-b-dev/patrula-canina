@@ -26,7 +26,6 @@ export const handler = async (event) => {
 		};
 	}
 
-	// TODO: add params to query for specific user
 	const evaluatedPath = `/api/rest/v2/keyspaces/${KEYSPACE}/${TABLE_USERS}`;
 	const where = `?where={"cat":{"$eq":"${queryStringParameters.cat}"},"email":{"$eq":"${queryStringParameters.email}"}}`;
 
@@ -37,7 +36,7 @@ export const handler = async (event) => {
 	}
 
 	const respPromise = await fetch(host + evaluatedPath + where, {
-		method: 'GET', headers: headers
+		method: httpMethod, headers: headers
 	})
 	const respParsed = await respPromise.json();
 	return {
