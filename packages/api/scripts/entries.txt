@@ -1,0 +1,4 @@
+patrulha canina,marshall,marshall.png,dalmata.jpg
+patrulha canina,rubble,rubble-personagem.png,rubble.jpg
+patrulha canina,chase,chase-personagem.png,pastor-alemao.jpg
+patrulha canina,everest,everest.png,siberiano.jpg
