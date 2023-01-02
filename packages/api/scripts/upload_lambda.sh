@@ -48,6 +48,22 @@ updateGetUsers() {
 	echo "upload to AWS finished"
 }
 
+updatePostUsers() {
+	echo "Updating JavaScript code"
+	cd ../src/POST/JS || exit
+	echo "rename file to what AWS expects"
+	cp postUsers.mjs index.mjs
+	echo "zip the executable"
+	zip index.zip index.mjs
+	echo "delete source (renamed)"
+	rm index.mjs
+	echo "upload to AWS started"
+	aws lambda update-function-code --function-name postUsers --zip-file fileb://index.zip | jq -S '.LastUpdateStatus'
+	echo "removes uploaded file"
+	rm index.zip
+	echo "upload to AWS finished"
+}
+
 updateGoCode() {
 	echo "Updating Go code"
 	cd ../src/PATCH/GO || exit
@@ -76,6 +92,8 @@ elif [ "$1" = "js" ]; then
 	updateJavaScriptCode
 elif [ "$1" = "getusers" ]; then
 	updateGetUsers
+elif [ "$1" = "postusers" ]; then
+	updatePostUsers
 else
 	echo "Unknown language"
 	exit 1
