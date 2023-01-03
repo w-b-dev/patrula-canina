@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./App.css";
 import {ApiResponseType} from "./interfaces";
 import {SingleEntryElement} from "./SingleEntryElement";
-import {getAllEntries} from "./api";
+import {getAllEntries, getUser} from "./api";
 
 
 const handleAnswer = (isCorrect: boolean) => {
@@ -14,6 +14,9 @@ const handleUserRegistration = (email: string, setUserRetrieved: (v: boolean) =>
 		return
 	}
 	// make fetch call to register user
+	getUser().then((data) => {
+		alert(JSON.stringify(data.data[0]));
+	});
 	setUserRetrieved(true);
 }
 

@@ -12,4 +12,17 @@ export const getAllEntries = async () => {
 	return await response.json();
 };
 
+export const getUser = async () => {
+	const paramCat = "daniel";
+	const paramEmail = "ds@foo.bar";
+	const response = await fetch(
+		(process.env?.REACT_APP_AWS_API_URL ?? "") + `/users?cat=${paramCat}&email=${paramEmail}`,
+		{
+			method: "GET",
+			headers: myHeaders,
+		}
+	);
+	return await response.json();
+};
+
 // TODO: don't forget to add on the server: "Access-Control-Allow-Origin = *"
