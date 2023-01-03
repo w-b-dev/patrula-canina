@@ -12,13 +12,38 @@ export const getAllEntries = async () => {
 	return await response.json();
 };
 
-export const getUser = async () => {
-	const paramCat = "daniel";
-	const paramEmail = "ds@foo.bar";
+export const getUser = async ({
+	paramCat,
+	paramEmail,
+}: {
+	paramCat: string;
+	paramEmail: string;
+}) => {
 	const response = await fetch(
-		(process.env?.REACT_APP_AWS_API_URL ?? "") + `/users?cat=${paramCat}&email=${paramEmail}`,
+		(process.env?.REACT_APP_AWS_API_URL ?? "") +
+			`/users?cat=${paramCat}&email=${paramEmail}`,
 		{
 			method: "GET",
+			headers: myHeaders,
+		}
+	);
+	return await response.json();
+};
+
+export const postUser = async ({
+	paramCat,
+	paramEmail,
+	paramName,
+}: {
+	paramCat: string;
+	paramEmail: string;
+	paramName: string;
+}) => {
+	const response = await fetch(
+		(process.env?.REACT_APP_AWS_API_URL ?? "") +
+			`/users?cat=${paramCat}&email=${paramEmail}&name=${paramName}`,
+		{
+			method: "POST",
 			headers: myHeaders,
 		}
 	);
