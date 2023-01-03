@@ -11,8 +11,8 @@
 	/*max-height: 30vh;*/
 	/*flex: 1;*/
 	display: flex;
-	justify-content: center;
-	align-items: center;
+	/*justify-content: center;*/
+	/*align-items: center;*/
 	border-bottom: 1px solid #999;
 }
 
@@ -22,6 +22,15 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.user-and-points {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
 }
 
 .membro {
@@ -49,5 +58,14 @@
 		max-width: 100%;
 		/*margin-bottom: 1rem;*/
 		max-height: 30vh;
+	}
+	.user-and-points {
+		flex-direction: column;
+		font-size: small;
+	}
+	.user-and-points * {
+		margin: 0;
+		padding: 0;
+		font-size: small;
 	}
 }

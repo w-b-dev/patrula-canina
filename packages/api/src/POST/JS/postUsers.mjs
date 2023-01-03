@@ -1,11 +1,6 @@
 export const handler = async (event) => {
 	// console.log({event});
-	const {
-		httpMethod,
-		stageVariables,
-		path,
-		queryStringParameters,
-	} = event;
+	const { httpMethod, stageVariables, path, queryStringParameters } = event;
 	if (!stageVariables || Object.keys(stageVariables).length === 0) {
 		return {
 			statusCode: 400,
@@ -26,6 +21,13 @@ export const handler = async (event) => {
 				message: "Missing required parameter",
 			}),
 		};
+	}
+	// add defaults if non-required params are not provided
+	if (!Object.keys(queryStringParameters).includes("won")) {
+		queryStringParameters.won = 0;
+	}
+	if (!Object.keys(queryStringParameters).includes("lost")) {
+		queryStringParameters.lost = 0;
 	}
 
 	const host = `https://${DB}-${REGION}.apps.astra.datastax.com`;

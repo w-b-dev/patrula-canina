@@ -9,9 +9,10 @@ function App() {
 	const [userEmail, setUserEmail] = useState<string>("");
 	const [userRetrieved, setUserRetrieved] = useState<User | null>(null);
 	const [getAPI, setGetAPI] = useState<ApiResponseType[]>([]);
+
 	useEffect(() => {
 		getAllEntries().then((data) => setGetAPI(data.data));
-	}, []);
+	}, [userRetrieved]);
 
 	return (
 		<div className="App">
@@ -70,51 +71,66 @@ function App() {
 					</>
 				)}
 			</header>
-			<section className={"cima"}>
-				{getAPI.length > 0 && (
-					<SingleEntryElement isBaseImage={true} membro={getAPI[0]} />
-				)}
-				<section>
-					{userRetrieved && (
-						<h2 style={{ flex: 1 }} id={"email"}>
+			{!!userRetrieved && (
+				<section className={"cima"}>
+					<section className={"user-and-points"}>
+						<h2 style={{ fontSize: "xx-large" }} id={"email"}>
 							{userRetrieved.name}
 						</h2>
-					)}
-					<h3>✅: {userRetrieved ? userRetrieved.won : "n/a"}</h3>
-					<h3>❌: {userRetrieved ? userRetrieved.lost : "n/a"}</h3>
-					<button
-						onClick={() => window.location.reload()}
-						disabled={!userRetrieved}
+						<h3 style={{ fontSize: "xx-large" }}>✅: {userRetrieved.won}</h3>
+						<h3 style={{ fontSize: "xx-large" }}>❌: {userRetrieved.lost}</h3>
+					</section>
+					<section
+						style={{
+							display: "flex",
+							flexDirection: "row",
+							alignItems: "center",
+							justifyContent: "space-between",
+						}}
 					>
-						Sair
-					</button>
+						<button onClick={() => window.location.reload()}>Sair</button>
+					</section>
 				</section>
-			</section>
+			)}
 
 			{userRetrieved && (
-				<section className={"baixo"}>
-					{getAPI.length > 0 && (
-						<SingleEntryElement
-							isBaseImage={false}
-							membro={getAPI[0]}
-							onClick={() => handleAnswer(true)}
-						/>
-					)}
-					{getAPI.length > 0 && (
-						<SingleEntryElement
-							isBaseImage={false}
-							membro={getAPI[1]}
-							onClick={() => handleAnswer(false)}
-						/>
-					)}
-					{getAPI.length > 0 && (
-						<SingleEntryElement
-							isBaseImage={false}
-							membro={getAPI[2]}
-							onClick={() => handleAnswer(false)}
-						/>
-					)}
-				</section>
+				<>
+					<section
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							alignItems: "center",
+							justifyContent: "center",
+						}}
+					>
+						{getAPI.length > 0 && (
+							<SingleEntryElement isBaseImage={true} membro={getAPI[0]} />
+						)}
+					</section>
+					<section className={"baixo"}>
+						{getAPI.length > 0 && (
+							<SingleEntryElement
+								isBaseImage={false}
+								membro={getAPI[0]}
+								onClick={() => handleAnswer(true)}
+							/>
+						)}
+						{getAPI.length > 0 && (
+							<SingleEntryElement
+								isBaseImage={false}
+								membro={getAPI[1]}
+								onClick={() => handleAnswer(false)}
+							/>
+						)}
+						{getAPI.length > 0 && (
+							<SingleEntryElement
+								isBaseImage={false}
+								membro={getAPI[2]}
+								onClick={() => handleAnswer(false)}
+							/>
+						)}
+					</section>
+				</>
 			)}
 		</div>
 	);
